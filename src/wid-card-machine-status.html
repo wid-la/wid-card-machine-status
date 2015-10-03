@@ -1,0 +1,155 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-styles/paper-styles-classes.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<link rel="import" href="../wid-card-weight-behavior/wid-card-weight-behavior.html">
+<link rel="import" href="../wid-versatile-websocket/wid-versatile-websocket.html">
+<link rel="import" href="../wid-card-subscriptions-behavior/wid-card-subscriptions-behavior.html">
+
+<!--
+This element is a card for `wid-cards-grid`. It displays the status of a machine
+Example:
+    <wid-card-machine-status
+      subscriptions="[{"key": "datetime", "value": "la.wid.chan.cloud.prod.database.archer.datetime"}]"
+      importance="2">
+    </wid-card-machine-status>
+@group Wid
+@element wid-websocket
+@demo demo/index.html
+-->
+<dom-module id="wid-card-machine-status">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 100%;
+        /*margin: 5px;*/
+        box-sizing: border-box;
+      }
+
+      paper-material {
+        overflow-y: auto;
+        height: 100%;
+        /*background-color: var(--paper-blue-100);*/
+      }
+
+
+      #header-container {
+        background-color: #ff9800;
+      }
+
+      #header-container iron-icon {
+        /*--iron-icon-height: 100%;*/
+      }
+
+      #cpu-container {
+        background-color: #eaeaea;
+      }
+
+      #cpu-container .row-icon {
+        background-color: #e8621a;
+      }
+
+      #status-container  .row-icon {
+        background-color: #e65100;
+      }
+
+      #cpu-container  .row-icon iron-icon,
+      #status-container  .row-icon iron-icon {
+        --iron-icon-width: calc(100%/2);
+      }
+
+      .scale-icon {
+        --iron-icon-height: 80%;
+      }      
+    </style>
+
+
+    <div id="websockets">
+
+      <!-- This is a requirement of `wid-card-subscriptions-behavior` -->
+      <!-- one websocket element for each subscribed channel -->
+      <template is="dom-repeat" items="[[websockets]]" as="ws">
+        <wid-versatile-websocket url="[[ws.url]]" token="[[ws.token]]" subscription="[[ws.subscription]]" on-data="_onData">
+        </wid-versatile-websocket>
+      </template>
+
+    </div>    
+
+    <paper-material class="layout vertical flex" elevation="3">
+
+      <div id="header-container" class="layout horizontal flex-3 center-center">
+        <div class="flex"></div>
+        <iron-icon class="scale-icon flex-3" src="server.svg"></iron-icon>
+        <div class="row-value layout horizontal flex-8 center-center">[[name]]</div>
+      </div>
+
+      <div id="cpu-container" class="layout horizontal flex-5">
+        <div class="row-icon flex layout vertical center-center"><iron-icon class="scale-icon" src="cpu.svg"></iron-icon></div>
+        <div class="row-value layout horizontal center-center flex-5">[[cpu]]</div>
+      </div>
+
+      <div id="status-container" class="layout horizontal flex-5">
+        <div class="row-icon flex layout vertical center-center"><iron-icon class="scale-icon" src="deploy.svg"></iron-icon></div>
+        <div class="row-value layout horizontal flex-5 center-center">[[status]]</div>
+      </div>
+
+
+    </paper-material>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+  (function () {
+
+    Polymer({
+
+      is: 'wid-card-machine-status',
+
+      behaviors: [
+        Polymer.WidCardWeightBehavior,
+        Polymer.WidCardSubscriptionsBehavior
+      ],
+
+      properties: {
+        /**
+         * Name
+         * @type {String}
+         */
+        name: {
+          type: String,
+          value: 'Machine Name'
+        },
+
+        /**
+         * CPU
+         * @type {Number}
+         */
+        cpu: {
+          type: Number,
+          value: 0
+        },
+
+        /**
+         * Status
+         * @type {String}
+         */
+        status: {
+          type: String,
+          value: 'Status'
+        }
+      }
+
+
+    });
+
+  })();
+
+</script>
