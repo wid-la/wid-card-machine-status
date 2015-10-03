@@ -15,7 +15,7 @@
        */
       name: {
         type: String,
-        value: 'Machine'
+        value: 'Machine Name'
       },
 
       /**
