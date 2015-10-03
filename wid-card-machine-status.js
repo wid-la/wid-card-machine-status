@@ -6,7 +6,7 @@
 
     is: 'wid-card-machine-status',
 
-    behaviors: [Polymer.WidCardWeightBehavior, Polymer.WidCardSubscriptionsBehavior],
+    behaviors: [Polymer.WidCardStandardBehavior, Polymer.WidCardWeightBehavior, Polymer.WidCardSubscriptionsBehavior],
 
     properties: {
       /**
