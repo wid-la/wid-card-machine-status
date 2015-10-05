@@ -35,6 +35,10 @@
         type: String,
         value: 'Status'
       }
+    },
+
+    _percentValue: function _percentValue(value) {
+      return value + '%';
     }
 
   });

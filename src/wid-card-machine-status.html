@@ -28,23 +28,23 @@ Example:
       :host {
         display: block;
         height: 100%;
-        /*margin: 5px;*/
         box-sizing: border-box;
       }
 
       paper-material {
         overflow-y: auto;
         height: 100%;
-        /*background-color: var(--paper-blue-100);*/
+        background-color: #fff;
       }
-
 
       #header-container {
         background-color: #ff9800;
+        color: white;
       }
 
-      #header-container iron-icon {
-        /*--iron-icon-height: 100%;*/
+      .row-value {
+        font-weight: bold;
+        font-size: 1.5vw;
       }
 
       #cpu-container {
@@ -66,19 +66,34 @@ Example:
 
       .scale-icon {
         --iron-icon-height: 80%;
-      }      
+      }
+
+      .paperProgressContainer {
+        position: relative;
+      }
+
+      .paperProgressValue {
+        z-index: 1;
+      }
+
+      .custom-progess {
+         width: 100%;
+         height: 100%;
+         left: 0px;
+         --paper-progress-height: 100%;
+         --paper-progress-active-color: #cacaca;
+         position: absolute;
+      }
     </style>
 
 
     <div id="websockets">
-
       <!-- This is a requirement of `wid-card-subscriptions-behavior` -->
       <!-- one websocket element for each subscribed channel -->
       <template is="dom-repeat" items="[[websockets]]" as="ws">
         <wid-versatile-websocket url="[[ws.url]]" token="[[ws.token]]" subscription="[[ws.subscription]]" on-data="_onData">
         </wid-versatile-websocket>
       </template>
-
     </div>    
 
     <paper-material class="layout vertical flex" elevation="3">
@@ -91,7 +106,10 @@ Example:
 
       <div id="cpu-container" class="layout horizontal flex-5">
         <div class="row-icon flex layout vertical center-center"><iron-icon class="scale-icon" src="cpu.svg"></iron-icon></div>
-        <div class="row-value layout horizontal center-center flex-5">[[cpu]]</div>
+        <div class="row-value layout horizontal center-center flex-5 paperProgressContainer">
+          <div class="paperProgressValue">[[_percentValue(cpu)]]</div>
+          <paper-progress id="paperProgress" class="custom-progess transiting flex" value="[[cpu]]"></paper-progress>
+        </div>
       </div>
 
       <div id="status-container" class="layout horizontal flex-5">
@@ -147,6 +165,10 @@ Example:
           type: String,
           value: 'Status'
         }
+      },
+
+      _percentValue: function(value) {
+        return value + '%';
       }
 
 
