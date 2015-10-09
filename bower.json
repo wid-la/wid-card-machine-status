@@ -24,7 +24,8 @@
     "wid-card-weight-behavior": "wid-la/wid-card-weight-behavior#~1.0.0",
     "wid-versatile-websocket": "wid-la/wid-versatile-websocket#~1.0.0",
     "wid-card-subscriptions-behavior": "wid-la/wid-card-subscriptions-behavior#~1.0.0",
-    "iron-icon": "PolymerElements/iron-icon#~1.0.5"
+    "iron-icon": "PolymerElements/iron-icon#~1.0.5",
+    "paper-progress": "PolymerElements/paper-progress#~1.0.7"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
